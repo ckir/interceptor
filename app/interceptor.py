@@ -182,10 +182,11 @@ try:
     # input("You can't see the next text. (press enter)")
 
 except TimeoutException as tm:
-    print("Restarting due to timeout limit")   
+    print("Restarting due to timeout limit")
 except Exception as e:
     exc_info = sys.exc_info()
     exc_info = {'exc_info': ''.join(traceback.format_exception(*exc_info))}
+    print("Exception ", exc_info)
     gslogger.GSLog(50, 0, "Exception ", exc_info)
     time.sleep(5)
 finally:
