@@ -23,6 +23,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 
 # Inpired from https://github.com/sindresorhus/is-docker
 class determineDocker:
@@ -179,7 +180,9 @@ try:
     time.sleep(60)
     driver.execute_async_script(open("./interceptor.js").read(), CNN_FearAndGreedUrl, GSLoggerUrl, heartbeat)
     # input("You can't see the next text. (press enter)")
-    
+
+except TimeoutException as tm:
+    print("Restarting due to timeout limit")   
 except Exception as e:
     exc_info = sys.exc_info()
     exc_info = {'exc_info': ''.join(traceback.format_exception(*exc_info))}
