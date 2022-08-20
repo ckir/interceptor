@@ -24,6 +24,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 from selenium.common.exceptions import NoSuchElementException
 
+# Inpired from https://github.com/sindresorhus/is-docker
 class determineDocker:
     def hasDockerEnv(self):
         try:
