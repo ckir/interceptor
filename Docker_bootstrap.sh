@@ -52,5 +52,5 @@ do
    python ./interceptor.py
    [ $? -eq 100 ] && break
    sleep 1
-   let COUNTER++
+   (( COUNTER++ ))
 done
