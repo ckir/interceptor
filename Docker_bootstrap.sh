@@ -4,6 +4,23 @@ figlet -c -k Running $me
 mkdir /app
 cd /app
 
+# Start server asap because Heroku will destroy the dyno
+# install nodejs 
+figlet -c -k Installing Nodejs
+curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+nvm install node
+
+# Install HTTPWatchdog
+figlet -c -k Installing HTTPWatchdog
+curl -sS -O https://raw.githubusercontent.com/ckir/httpwatchdog/main/HTTPWatchdog.js
+curl -sS -O https://raw.githubusercontent.com/ckir/httpwatchdog/main/HTTPWatchdog_loop_run.sh
+chmod +x HTTPWatchdog_loop_run.sh
+./HTTPWatchdog_loop_run.sh &
+echo "HTTPWatchdog_loop_run.sh started at port ${PORT:-9999}"
+
 # install python requirements
 figlet -c -k Installing Python
 pip install --upgrade pip
@@ -11,7 +28,7 @@ pip install selenium webdriver-manager
 
 # Install pyGSLogger
 figlet -c -k Installing pyGSLogger
-curl -O https://raw.githubusercontent.com/ckir/interceptor/main/pyGSLogger.py
+curl -sS -O https://raw.githubusercontent.com/ckir/interceptor/main/pyGSLogger.py
 chmod +x pyGSLogger.py
 ./pyGSLogger.py --appname=${me} --loglevel=10 --lognotify=0 --logmessage="${me} Started"
 
@@ -19,30 +36,14 @@ chmod +x pyGSLogger.py
 figlet -c -k Installing Chrome
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-apt-get -y update
-apt-get install -y google-chrome-stable
+apt-get -qq -y update
+apt-get -qq install -y google-chrome-stable
 rm -rf /var/lib/apt/lists/*
-
-# install nodejs 
-figlet -c -k Installing Nodejs
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-nvm install node
-
-# Install application
-figlet -c -k Installing HTTPWatchdog
-curl -O https://raw.githubusercontent.com/ckir/httpwatchdog/main/HTTPWatchdog.js
-curl -O https://raw.githubusercontent.com/ckir/httpwatchdog/main/HTTPWatchdog_loop_run.sh
-chmod +x HTTPWatchdog_loop_run.sh
-./HTTPWatchdog_loop_run.sh &
-echo "HTTPWatchdog_loop_run.sh started at port ${PORT:-9999}"
 
 # get Interceptor
 figlet -c -k Installing Interceptor
-curl -O https://raw.githubusercontent.com/ckir/interceptor/main/app/interceptor.py
-curl -O https://raw.githubusercontent.com/ckir/interceptor/main/app/interceptor.js
+curl -sS -O https://raw.githubusercontent.com/ckir/interceptor/main/app/interceptor.py
+curl -sS -O https://raw.githubusercontent.com/ckir/interceptor/main/app/interceptor.js
 
 COUNTER=1
 while true
