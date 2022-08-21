@@ -54,3 +54,4 @@ do
    sleep 1
    (( COUNTER++ ))
 done
+./pyGSLogger.py --appname=${me} --loglevel=50 --lognotify=1 --logmessage="Interceptor exited status 100. Review NOW"
