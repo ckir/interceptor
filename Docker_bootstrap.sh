@@ -5,6 +5,7 @@ function onexit() {
   ./pyGSLogger.py --appname=${me} --loglevel=10 --lognotify=0 --logmessage="${me} Exited"
 }
 
+
 figlet -c -k Running $me
 mkdir /app
 cd /app
