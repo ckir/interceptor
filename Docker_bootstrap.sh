@@ -1,6 +1,11 @@
 me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
-figlet -c -k Running $me
+# Declare the function
+function onexit() {
+  ./pyGSLogger.py --appname=${me} --loglevel=10 --lognotify=0 --logmessage="${me} Exited"
+}
+trap onexit exit SIGTERM SIGINT
 
+figlet -c -k Running $me
 mkdir /app
 cd /app
 
