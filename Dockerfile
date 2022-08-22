@@ -29,4 +29,4 @@ WORKDIR /home/docker
 
 RUN curl -O ${INITIALIZE} && chmod +x Docker_bootstrap.sh
 
-ENTRYPOINT /Docker_bootstrap.sh
+ENTRYPOINT /home/docker/Docker_bootstrap.sh
