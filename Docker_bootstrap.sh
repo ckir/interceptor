@@ -29,6 +29,7 @@ echo "HTTPWatchdog_loop_run.sh started at port ${PORT:-9999}"
 
 # install python requirements
 figlet -c -k Installing Python
+[[ ":$PATH:" != *":/home/docker/.local/bin:"* ]] && PATH="${PATH}:/home/docker/.local/bin"
 pip install --upgrade pip
 pip install selenium webdriver-manager
 
